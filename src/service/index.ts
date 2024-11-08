@@ -6,7 +6,10 @@ export type TokenData = {
     ticker: string
     description: string
     image: string
-    create_at: number
+    createAt: number
+    twitterLink: string
+    telegramLink: string
+    websiteLink: string
 }
 
 

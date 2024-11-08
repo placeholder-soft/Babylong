@@ -19,6 +19,9 @@ interface FormData {
   description: string
   image: string
   create_at: number
+  twitterLink: string
+  telegramLink: string
+  websiteLink: string
 }
 
 const initialFormState: FormData = {
@@ -27,6 +30,9 @@ const initialFormState: FormData = {
   description: '',
   image: '',
   create_at: 0,
+  twitterLink: '',
+  telegramLink: '',
+  websiteLink: '',
 }
 
 const styles = {
@@ -39,6 +45,7 @@ const styles = {
 export const CreateTokenPage: FC = () => {
   const [formData, setFormData] = useState<FormData>(initialFormState)
   const [isUploading, setIsUploading] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { data: signingClient } = useCosmWasmSigningClient({
     opts: signingOpts,
@@ -80,7 +87,7 @@ export const CreateTokenPage: FC = () => {
       return
     }
 
-    setIsUploading(true)
+    setIsSubmitting(true)
 
     try {
       const name = randomNanoid()
@@ -97,6 +104,7 @@ export const CreateTokenPage: FC = () => {
         {
           onError: () => {
             toast.error("Failed to create token")
+            setIsSubmitting(false)
           },
           onSuccess: async () => {
             await createToken({
@@ -105,16 +113,19 @@ export const CreateTokenPage: FC = () => {
               ticker: formData.ticker.trim(),
               description: formData.description.trim(),
               image: formData.image,
-              create_at: Date.now(),
+              createAt: Date.now(),
+              twitterLink: formData.twitterLink.trim(),
+              telegramLink: formData.telegramLink.trim(),
+              websiteLink: formData.websiteLink.trim(),
             })
-            setIsUploading(false)
+            setIsSubmitting(false)
             toast.success("Token created successfully")
-            // resetForm()
+            resetForm()
           },
         },
       )
     } catch (error) {
-      setIsUploading(false)
+      setIsSubmitting(false)
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
       toast.error(errorMessage)
     }
@@ -122,11 +133,14 @@ export const CreateTokenPage: FC = () => {
 
   return (
     <div className="w-full min-h-[100vh] relative flex flex-col items-center justify-center">
-      <div className="flex-1 flex flex-col items-center justify-center relative pb-[254px]">
+      <div className="flex-1 flex flex-col items-center justify-center relative pb-[524px]">
         <img src={header} alt="header" className="h-[80px] w-full relative z-10" />
         <img src={bg} alt="bg" className="w-full h-full absolute top-0 left-0 z-0" />
         <img src={title} alt="title" className="h-[108px] relative z-10 mt-[120px] mb-[100px]" />
         <form onSubmit={handleSubmit} className="space-y-6 bg-white w-[640px] flex-1 relative z-10 border-[4px] border-black rounded-xl p-10">
+          <div className="absolute -top-[100px] -left-[100px] z-30">
+            <HotIcon />
+          </div>
           {/* Name Input */}
           <div className={styles.formGroup}>
             <label htmlFor="displayName" className={styles.label}>
@@ -177,6 +191,8 @@ export const CreateTokenPage: FC = () => {
             />
           </div>
 
+          <div className="h-[1px] w-full bg-[#E6E6E6]" />
+
           {/* Image Uploader */}
           <div className={styles.formGroup}>
             <label className={styles.label}>
@@ -189,17 +205,72 @@ export const CreateTokenPage: FC = () => {
             />
           </div>
 
+          {/* Website Link Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="websiteLink" className={styles.label}>
+              Website Link
+            </label>
+            <input
+              type="url"
+              id="websiteLink"
+              name="websiteLink"
+              placeholder="(Optional)"
+              value={formData.websiteLink}
+              onChange={handleInputChange}
+              className={styles.input}
+            />
+          </div>
+
+          {/* Twitter Link Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="twitterLink" className={styles.label}>
+              Twitter Link
+            </label>
+            <input
+              type="url"
+              id="twitterLink"
+              name="twitterLink"
+              placeholder="(Optional)"
+              value={formData.twitterLink}
+              onChange={handleInputChange}
+              className={styles.input}
+            />
+          </div>
+
+          {/* Telegram Link Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="telegramLink" className={styles.label}>
+              Telegram Link
+            </label>
+            <input
+              type="url"
+              id="telegramLink"
+              name="telegramLink"
+              placeholder="(Optional)"
+              value={formData.telegramLink}
+              onChange={handleInputChange}
+              className={styles.input}
+            />
+          </div>
+
+
+          <p className="text-lg text-gray-600">Tip: Coin data cannot be changed after creation</p>
+
+          <div className="h-[1px] w-full bg-[#E6E6E6]" />
+
           {/* Submit Button */}
           <div className="mt-8">
             <button
               type="submit"
-              disabled={isUploading}
+              disabled={isUploading || isSubmitting}
               className={styles.submitButton}
             >
-              {isUploading ? 'CREATING...' : <div className="flex items-center justify-center gap-2">
-                <span>CREATE TOKEN</span>
-                <img src={button} alt="button" className="h-[70px]" />
-              </div>}
+              {isSubmitting ? 'CREATING TOKEN...' : isUploading ? 'UPLOADING...' : (
+                <div className="flex items-center justify-center gap-2">
+                  <span>CREATE TOKEN</span>
+                  <img src={button} alt="button" className="h-[70px]" />
+                </div>
+              )}
             </button>
           </div>
         </form>
