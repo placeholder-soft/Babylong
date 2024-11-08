@@ -16,6 +16,7 @@ import { getEllipsisAddress } from "../../../utils/formatAddress"
 import { formatUnits } from "../../../utils/number"
 import { TokenPrice } from "../../Detail"
 import { useSearch } from '../../../context/SearchContext';
+import { KingHillView } from "./KingHillView"
 
 
 interface ListContentProps {
@@ -32,7 +33,7 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
     });
 
     return (
-        <div className="flex rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
+        <div className="flex rounded-lg bg-white p-4 shadow-md max-w-[533px] transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
             <div className="flex-shrink-0">
                 <img
                     src={item.image}
@@ -50,7 +51,7 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
                     <p className="text-[#D90368]">Market cap <span className="font-medium">  {formatUnits(tokenPrice?.supply, 6)}</span></p>
                 </div>
                 <div className="flex items-center justify-between">
-                    <p className="text-gray-600"> <span className="font-semibold">{item.name}</span> {item.description}</p>
+                    <p className="text-gray-600 text-wrap break-all"> <span className="font-semibold">{item.name}</span> {item.description}</p>
                 </div>
             </div>
         </div>
@@ -59,8 +60,8 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
 
 const ListContent: React.FC<ListContentProps> = ({ items }) => {
     const { searchValue } = useSearch();
-    
-    const filteredItems = items.filter(item => 
+
+    const filteredItems = items.filter(item =>
         item.address.toLowerCase().includes(searchValue.toLowerCase()) ||
         item.name.toLowerCase().includes(searchValue.toLowerCase())
     );
@@ -95,6 +96,7 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
 
 export const WireListContent = () => {
     const [tokenList, setTokenList] = useState<CombineTokenData[]>([])
+    const [lastItem, setLastItem] = useState<CombineTokenData | undefined>(undefined)
 
     const { data: signingClient } = useCosmWasmSigningClient({
         opts: signingOpts,
@@ -119,9 +121,13 @@ export const WireListContent = () => {
                 } as CombineTokenData
             })
             setTokenList(result)
+            setLastItem(result[result.length - 1])
         })
     }, [signingClient])
 
 
-    return <ListContent items={tokenList} />
+    return <>
+        <ListContent items={tokenList} />
+        {lastItem && <KingHillView item={lastItem} />}
+    </>
 }

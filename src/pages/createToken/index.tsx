@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from "react"
+import { FC, useState, ChangeEvent, useEffect } from "react"
 import { useCosmWasmSigningClient, useExecuteContract } from "graz"
 import { toast } from "react-toastify"
 import { signingOpts } from "../../constant"
@@ -130,6 +130,10 @@ export const CreateTokenPage: FC = () => {
       toast.error(errorMessage)
     }
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className="w-full min-h-[100vh] relative flex flex-col items-center justify-center">
