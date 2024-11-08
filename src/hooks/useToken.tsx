@@ -11,7 +11,7 @@ export const useTokenInfo = (address: string | undefined) => {
     opts: signingOpts,
   })
   useEffect(() => {
-    if (!signingClient || !address) return
+    if (!address || !signingClient) return
     signingClient.getContract(address).then(res => {
       const name = getTokenName(res.label)
       console.log("name", res, name)

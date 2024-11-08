@@ -23,8 +23,6 @@
     "baseUrl": ".",
     "types": ["@cloudflare/workers-types"],
     "paths": {
-      "@clients/graphql": ["./src/clients/graphql"],
-      "@clients/rest": ["./src/clients/rest"],
       "@env": ["./src/env"]
     }
   },

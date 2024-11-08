@@ -1,7 +1,17 @@
+import {
+  useAccount,
+  useBalances,
+  useCosmWasmSigningClient,
+  useExecuteContract,
+  useQuerySmart,
+} from "graz"
 import { useState } from "react"
 import { useParams } from "react-router"
+import { toast } from "react-toastify"
 import { Footer } from "../../components/footer"
+import { signingOpts } from "../../constant"
 import { useTokenInfo } from "../../hooks/useToken"
+import { formatUnits, parseUnits } from "../../utils/number"
 import ButtonIcon from "./assets/button-icon.svg?react"
 import DislikeIcon from "./assets/dislike-icon.svg?react"
 import LeftTopIcon from "./assets/left-top-icon.svg?react"
@@ -9,9 +19,35 @@ import LikeIcon from "./assets/like-icon.svg?react"
 import { Tab, TabType } from "./assets/Tab"
 
 export default function Detail() {
+  const { data: signingClient } = useCosmWasmSigningClient({
+    opts: signingOpts,
+  })
+  const { data: accountData } = useAccount()
+  const { data: balances } = useBalances()
   const { address } = useParams()
+  const { executeContract } = useExecuteContract({ contractAddress: address! })
+
   useTokenInfo(address)
+
+  const { data: tokenBalance } = useQuerySmart<{ balance: string }, string>({
+    address,
+    queryMsg: {
+      balance: {
+        address: accountData?.bech32Address,
+      },
+    },
+  })
+
+  const { data: tokenPrice } = useQuerySmart({
+    address,
+    queryMsg: {
+      curve_info: {},
+    },
+  })
+  console.log(tokenPrice, tokenBalance)
   const [activeTab, setActiveTab] = useState<TabType>(TabType.BUY)
+  const [amount, setAmount] = useState("")
+
   const voteList = [
     {
       num: 100,
@@ -22,6 +58,77 @@ export default function Detail() {
       icon: <DislikeIcon />,
     },
   ]
+
+  const isBuy = activeTab === TabType.BUY
+
+  const setMax = () => {
+    if (isBuy) {
+      const bbnBalance = balances?.find(item => item.denom === "ubbn")?.amount
+      setAmount(formatUnits(bbnBalance, 6))
+    } else {
+      setAmount(formatUnits(tokenBalance?.balance, 6))
+    }
+  }
+
+  const handleBuy = () => {
+    console.log("buy", [{ denom: "ubbn", amount: parseUnits(amount, 6) }])
+    executeContract(
+      {
+        signingClient: signingClient!,
+        msg: { buy: {} },
+        funds: [{ denom: "ubbn", amount: parseUnits(amount, 6) }],
+      },
+      {
+        onError: err => {
+          console.error("Buy transaction failed", err)
+        },
+        onSuccess: () => {
+          toast.success("Buy transaction successful")
+        },
+      },
+    )
+  }
+
+  const handleSell = () => {
+    if (tokenBalance?.balance === "0") {
+      toast.error("You have no this token balance")
+      return
+    }
+    executeContract(
+      {
+        signingClient: signingClient!,
+        msg: {
+          burn: {
+            amount: parseUnits(amount, 6),
+          },
+        },
+      },
+      {
+        onError: err => {
+          console.error("Sell token failed", err)
+        },
+        onSuccess: () => {
+          toast.success("Sell token successful")
+        },
+      },
+    )
+  }
+
+  const handleClick = () => {
+    if (!signingClient) {
+      toast.error("Please connect wallet")
+      return
+    }
+    if (amount === "" || amount === "0") {
+      toast.error("Please enter the amount")
+      return
+    }
+    if (isBuy) {
+      handleBuy()
+    } else {
+      handleSell()
+    }
+  }
 
   return (
     <div className="flex h-screen flex-col bg-[#dc145c]">
@@ -73,18 +180,27 @@ export default function Detail() {
               <Tab activeTab={activeTab} onChange={setActiveTab} />
               <div className="mb-6 mt-10 flex justify-between text-[18px] font-bold leading-[140%]">
                 <span className="text-[#D90368]">SWITCH TO FSQUAD</span>
-                <span className="cursor-pointer underline">Max</span>
+                <span className="cursor-pointer underline" onClick={setMax}>
+                  Max
+                </span>
               </div>
               <div className="flex items-center justify-between rounded-[9px] border-4 border-solid border-[#E6E6E6] px-[24px] py-[16px] text-[32px]">
                 <input
                   type="number"
                   placeholder="0.0"
+                  value={amount}
+                  onChange={e => setAmount(e.target.value)}
                   className="h-[45px] flex-1 border-none text-[32px] font-bold outline-none placeholder:text-black"
                 />
-                <span className="ml-4 leading-[140%] text-black">BBN</span>
+                {isBuy && (
+                  <span className="ml-4 leading-[140%] text-black">BBN</span>
+                )}
               </div>
-              <div className="mt-6 flex cursor-pointer items-center justify-center rounded-[13px] border-[3px] border-solid border-black bg-[#FFCA05] px-[24px] py-[16px] text-[32px] font-[900] uppercase shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
-                {activeTab === TabType.BUY ? "BUY" : "SELL"} Token
+              <div
+                onClick={handleClick}
+                className={`mt-6 flex cursor-pointer items-center justify-center rounded-[13px] border-[3px] border-solid border-black bg-[#FFCA05] px-[24px] py-[16px] text-[32px] font-[900] uppercase shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]`}
+              >
+                {isBuy ? "BUY" : "SELL"} Token
                 <ButtonIcon className="ml-2" />
               </div>
             </div>
