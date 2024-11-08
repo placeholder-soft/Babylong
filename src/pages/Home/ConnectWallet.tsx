@@ -2,7 +2,7 @@ import { useAccount, useConnect, useDisconnect, WalletType } from "graz"
 import { saltplaer } from "../../constant"
 import { getEllipsisAddress } from "../../utils/formatAddress"
 import SearchIcon from "./assets/searchIcon.svg?react"
-import WalletIcon from "./assets/wallet.svg?react"
+import WalletIcon from "./assets/wallet-icon.svg?react"
 
 export default function ConnectWallet() {
   const { connect } = useConnect()
