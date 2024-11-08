@@ -4,12 +4,12 @@ import 'vite-plugin-cloudflare-functions/client';
 
 declare module 'vite-plugin-cloudflare-functions/client' {
   interface PagesResponseBody {
+    '/api/tokens/list': {
+      GET: CloudflareResponseBody<typeof import('functions/api/tokens/list')['onRequestGet']>;
+    };
     '/api/tokens/:tokenId': {
       GET: CloudflareResponseBody<typeof import('functions/api/tokens/[tokenId]')['onRequestGet']>;
       POST: CloudflareResponseBody<typeof import('functions/api/tokens/[tokenId]')['onRequestPost']>;
-    };
-    '/api/tokens/list': {
-      GET: CloudflareResponseBody<typeof import('functions/api/tokens/list')['onRequestGet']>;
     };
   }
 }
