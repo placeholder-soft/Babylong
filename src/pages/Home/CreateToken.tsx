@@ -1,20 +1,16 @@
-import { GasPrice } from "@cosmjs/stargate"
 import { useCosmWasmSigningClient, useExecuteContract } from "graz"
 import { toast } from "react-toastify"
+import { signingOpts } from "../../constant"
+import { env } from "../../env"
 import { randomNanoid } from "../../utils/nanoid"
 import CreateTokenIcon from "./assets/create-token.svg?react"
 
-const FACTORY_ADDRESS =
-  "bbn143qwq8ksje7t5mnulh8jawh5jzptnm8q2lr98sr9e6m4vg9dhrfqdhyq2z"
-
 export const CreateToken = ({ className }: { className?: string }) => {
   const { data: signingClient } = useCosmWasmSigningClient({
-    opts: {
-      gasPrice: GasPrice.fromString("0.012ubbn"),
-    },
+    opts: signingOpts,
   })
   const { executeContract } = useExecuteContract({
-    contractAddress: FACTORY_ADDRESS,
+    contractAddress: env.VITE_FACTORY_ADDRESS,
   })
 
   const createToken = () => {

@@ -1,30 +1,30 @@
-import { useAccount, useConnect, useDisconnect, WalletType } from "graz";
-import { saltplaer } from "../../main";
-import { getEllipsisAddress } from "../../utils/formatAddress";
-import SearchIcon from "./assets/searchIcon.svg?react";
-import WalletIcon from "./assets/wallet.svg?react";
+import { useAccount, useConnect, useDisconnect, WalletType } from "graz"
+import { saltplaer } from "../../constant"
+import { getEllipsisAddress } from "../../utils/formatAddress"
+import SearchIcon from "./assets/searchIcon.svg?react"
+import WalletIcon from "./assets/wallet.svg?react"
 
 export default function ConnectWallet() {
-  const { connect } = useConnect();
-  const { isConnected, data: accountData } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { connect } = useConnect()
+  const { isConnected, data: accountData } = useAccount()
+  const { disconnect } = useDisconnect()
   return (
-    <div className="py-[32px] px-[7%] flex justify-center items-center bg-[#D90368]">
-      <div className="flex items-center gap-2 flex-1">
+    <div className="flex items-center justify-center bg-[#D90368] px-[7%] py-[32px]">
+      <div className="flex flex-1 items-center gap-2">
         <SearchIcon />
         <input
-          className="w-full ml-[32px] outline-none text-[32px] text-white uppercase bg-transparent placeholder:text-white"
+          className="ml-[32px] w-full bg-transparent text-[32px] uppercase text-white outline-none placeholder:text-white"
           type="text"
           placeholder="Type token symbol, address to find your launchpad..."
         />
       </div>
-      <div className="p-[24px] rounded-[73px] border-4 border-solid border-[#FFCA05] text-[#FFCA05] text-[32px] font-bold">
+      <div className="rounded-[73px] border-4 border-solid border-[#FFCA05] p-[24px] text-[32px] font-bold text-[#FFCA05]">
         {isConnected ? (
           <div className="flex items-center gap-2">
             <WalletIcon />
             {getEllipsisAddress(accountData?.bech32Address)}
             <button
-              className="uppercase text-[24px] ml-4"
+              className="ml-4 text-[24px] uppercase"
               onClick={() => disconnect()}
             >
               Disconnect
@@ -37,7 +37,7 @@ export default function ConnectWallet() {
               connect({
                 chainId: saltplaer.chainId,
                 walletType: WalletType.LEAP,
-              });
+              })
             }}
           >
             Connect Wallet
@@ -45,5 +45,5 @@ export default function ConnectWallet() {
         )}
       </div>
     </div>
-  );
+  )
 }
