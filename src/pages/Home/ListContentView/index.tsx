@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react"
 import tokens from "./_/tokens.png"
 import coin from "./_/coin.png"
+import page from "./_/page.png"
+
+
+import LeftArrow from "./_/chevrons-left.svg?react"
+import RightArrow from "./_/chevrons-right.svg?react"
+
 import { getTokenList, TokenData } from "../../../service"
 import { useCosmWasmSigningClient, useQuerySmart } from "graz"
 import { signingOpts } from "../../../constant"
 import { useNavigate } from "react-router"
+
 
 type ListItemProps = TokenData & {
     address: string
@@ -61,6 +68,14 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
                         item={item}
                     />
                 ))}
+            </div>
+            <div className="flex items-center justify-center gap-4 h-[159px] mt-[120px]">
+                <LeftArrow />
+                <div className="flex items-center justify-center gap-4 relative">
+                    <img src={page} alt="page" />
+                    <p className="absolute text-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">01</p>
+                </div>
+                <RightArrow />
             </div>
         </div>
     )
