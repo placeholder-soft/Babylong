@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-    font-size: 100px;
+@font-face {
+  font-family: SchibstedGrotesk;
+  font-display: swap;
+  src: url("fonts/SchibstedGrotesk-Regular.ttf") format("opentype");
+}
+
+body {
+  font-family: SchibstedGrotesk;
 }
