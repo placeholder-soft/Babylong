@@ -4,6 +4,7 @@ import coin from "./_/coin.png"
 import { getTokenList, TokenData } from "../../../service"
 import { useCosmWasmSigningClient, useQuerySmart } from "graz"
 import { signingOpts } from "../../../constant"
+import { useNavigate } from "react-router"
 
 type ListItemProps = TokenData & {
     address: string
@@ -13,6 +14,7 @@ interface ListContentProps {
 }
 
 const ListItem: React.FC<{item: ListItemProps}> = ({ item }) => {
+    const navigate = useNavigate()
     const { data: tokenPrice } = useQuerySmart({
         address: item.address,
         queryMsg: {
@@ -21,7 +23,7 @@ const ListItem: React.FC<{item: ListItemProps}> = ({ item }) => {
       });
 
     return (
-        <div className="flex rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg h-fit">
+        <div className="flex rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
             <div className="flex-shrink-0">
                 <img
                     src={item.image}
