@@ -53,3 +53,6 @@ export const saltplaer = {
 export const signingOpts = {
   gasPrice: GasPrice.fromString("0.012ubbn"),
 }
+
+export const EXPLORER_URL =
+  "https://devnet.satlayer.xyz/satlayer-babylon-testnet"

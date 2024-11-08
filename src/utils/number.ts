@@ -13,7 +13,9 @@ export function formatUnits(
     .slice(0, decimals)
   const integerPart = formattedValue.toString()
 
-  return `${integerPart}.${decimalPart}`
+  const result = decimalPart ? `${integerPart}.${decimalPart}` : integerPart
+
+  return parseFloat(result).toString()
 }
 
 export function parseUnits(value: string, decimals: number = 18): string {
