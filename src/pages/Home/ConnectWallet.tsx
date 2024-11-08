@@ -9,7 +9,7 @@ export default function ConnectWallet() {
   const { isConnected, data: accountData } = useAccount()
   const { disconnect } = useDisconnect()
   return (
-    <div className="flex items-center justify-center gap-4 bg-[#D90368] px-[7%] py-[32px]">
+    <div className="absolute bottom-[0px] flex w-full items-center justify-center gap-4 border-t border-solid border-[#D6d6d6] bg-[#D90368] px-[7%] py-[32px]">
       <div className="flex flex-1 items-center gap-2">
         <SearchIcon />
         <input
