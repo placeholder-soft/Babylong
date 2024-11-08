@@ -1,14 +1,8 @@
-// import { useEffect } from "react"
+import { useParams } from "react-router"
+import { useTokenInfo } from "../../hooks/useToken"
 
 export default function Detail() {
-  // useEffect(() => {
-  //   signingClient
-  //     ?.getContract(
-  //       "bbn14nmsd22t5rdv083eu0gn08j8dm7yjvhkzaaeh9n50nq4pm4slctqrqw87x",
-  //     )
-  //     .then(res => {
-  //       console.log("res-qq", res)
-  //     })
-  // }, [])
+  const { address } = useParams()
+  useTokenInfo(address)
   return <div>Detail</div>
 }
