@@ -8,7 +8,7 @@ export const onRequestGet = makePagesFunction<unknown, PagesFunctionEnv>(
     async ({ params, env }) => {
       const keys = (await env.satlayer_hackathon_tokens.list()).keys.map(key => key.name);
 
-      const tokens = await Promise.all(keys.map(key => env.satlayer_hackathon_tokens.get(key)));
+      const tokens = await Promise.all(keys.map(async key => JSON.parse(await env.satlayer_hackathon_tokens.get(key) as string)));
 
       return makeResponse(tokens, {
         headers: {
