@@ -79,13 +79,13 @@ export default function Detail() {
                 <input
                   type="number"
                   placeholder="0.0"
-                  className="h-[45px] flex-1 font-bold outline-none placeholder:text-black"
+                  className="h-[45px] flex-1 border-none text-[32px] font-bold outline-none placeholder:text-black"
                 />
                 <span className="ml-4 leading-[140%] text-black">BBN</span>
               </div>
               <div className="mt-6 flex cursor-pointer items-center justify-center rounded-[13px] border-[3px] border-solid border-black bg-[#FFCA05] px-[24px] py-[16px] text-[32px] font-[900] uppercase shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
                 {activeTab === TabType.BUY ? "BUY" : "SELL"} Token
-                <ButtonIcon />
+                <ButtonIcon className="ml-2" />
               </div>
             </div>
           </div>

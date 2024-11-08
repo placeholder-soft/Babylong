@@ -18,7 +18,7 @@ export default function ConnectWallet() {
           placeholder="Type token symbol, address to find your launchpad..."
         />
       </div>
-      <div className="rounded-[73px] border-4 border-solid border-[#FFCA05] bg-[#C5005D] p-[24px] text-[30px] font-bold leading-[30px] text-[#FFCA05]">
+      <div className="rounded-[73px] border-4 border-solid border-[#FFCA05] bg-[#C5005D] p-[32px] text-[32px] font-bold leading-[100%] text-[#FFCA05]">
         {isConnected ? (
           <div className="flex items-center gap-2">
             <WalletIcon />
