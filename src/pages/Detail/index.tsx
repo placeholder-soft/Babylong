@@ -5,7 +5,7 @@ import {
   useExecuteContract,
   useQuerySmart,
 } from "graz"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useParams } from "react-router"
 import { toast } from "react-toastify"
 import { Footer } from "../../components/footer"
@@ -19,6 +19,7 @@ import DislikeIcon from "./assets/dislike-icon.svg?react"
 import LeftTopIcon from "./assets/left-top-icon.svg?react"
 import LikeIcon from "./assets/like-icon.svg?react"
 import { Tab, TabType } from "./assets/Tab"
+import { CountUp } from 'countup.js'
 
 export interface TokenPrice {
   reserve: string
@@ -62,6 +63,8 @@ export default function Detail() {
   const [activeTab, setActiveTab] = useState<TabType>(TabType.BUY)
   const [amount, setAmount] = useState("")
   const [voteData, setVoteData] = useState<VoteData>({ likes: 0, dislikes: 0 })
+  const countUpRef = useRef<CountUp>()
+  const marketCapRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     const storedVotes = localStorage.getItem(`votes_${address}`)
@@ -214,6 +217,25 @@ export default function Detail() {
     }
   }
 
+  useEffect(() => {
+    if (marketCapRef.current && tokenPrice?.supply) {
+      if (countUpRef.current) {
+        countUpRef.current.update(Number(formatUnits(tokenPrice.supply, 6)))
+      } else {
+        countUpRef.current = new CountUp(
+          marketCapRef.current,
+          Number(formatUnits(tokenPrice.supply, 6)),
+          {
+            decimalPlaces: 2,
+            duration: 1,
+            useEasing: true,
+          }
+        )
+        countUpRef.current.start()
+      }
+    }
+  }, [tokenPrice?.supply])
+
   return (
     <div className="flex h-screen flex-col bg-[url('/src/pages/Detail/assets/bg.svg')] bg-cover bg-bottom">
       <div className="flex w-full flex-1 items-center justify-center">
@@ -250,9 +272,10 @@ export default function Detail() {
               </div>
               <div className="mt-2 text-[18px] leading-[140%] text-[#D90368]">
                 Market cap{" "}
-                <span className="font-semibold">
-                  {formatUnits(tokenPrice?.supply, 6)}
-                </span>
+                <span 
+                  ref={marketCapRef} 
+                  className="font-semibold"
+                />
               </div>
               <h2 className="mt-[40px] text-[36px] font-[900] uppercase leading-[100%]">
                 {`${tokenData?.displayName} (ticker: ${tokenData?.ticker})`}
