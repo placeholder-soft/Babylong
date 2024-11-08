@@ -34,10 +34,11 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
 
     return (
         <div 
-            className="flex rounded-lg bg-white gap-6 p-4 shadow-md max-w-[533px] 
+            className="flex rounded-lg bg-white gap-6 p-4 
+            shadow-[0_4px_12px_rgba(0,0,0,0.1)] max-w-[533px] 
             transition-all duration-300 
-            hover:shadow-xl hover:scale-[1.02] 
-            active:scale-[0.98] active:shadow-md 
+            hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:scale-[1.02] 
+            active:scale-[0.98] active:shadow-[0_4px_12px_rgba(0,0,0,0.15)] 
             cursor-pointer border-[2px] border-black 
             h-fit" 
             onClick={() => navigate(`/detail/${item.address}`)}
