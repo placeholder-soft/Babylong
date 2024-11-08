@@ -33,7 +33,7 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
     });
 
     return (
-        <div className="flex rounded-lg bg-white p-4 shadow-md max-w-[533px] transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
+        <div className="flex rounded-lg bg-white gap-4 p-4 shadow-md max-w-[533px] transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
             <div className="flex-shrink-0">
                 <img
                     src={item.image}
