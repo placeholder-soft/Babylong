@@ -1,29 +1,18 @@
 # Token Creation Platform
 
-A decentralized token creation platform built with React + TypeScript + Vite.
+A decentralized token creation platform built on Babylon Testnet using React + TypeScript + Vite.
 
 ## Overview
 
-This is a decentralized platform that enables users to easily create and manage their own tokens on the blockchain, specifically designed for SAT Layer tokens. The platform provides comprehensive token management features including creation, trading, and listing.
+This is a decentralized platform specifically designed for the Babylon Testnet that enables users to easily create and manage their own tokens, including creation, trading, and listing management features.
 
-### Key Features
+### Core Features
 
 - Token Management
-  - View complete token list with real-time data
-  - Create custom SAT Layer tokens
-  - Trade tokens (Buy/Sell functionality)
+  - View real-time token listings
+  - Create custom tokens
+  - Token trading functionality
   - Real-time price tracking
-
-- Token Creation
-  - Support for standard token creation
-  - Customizable token parameters (name, symbol, total supply, etc.)
-  - SAT Layer token deployment
-  
-- Trading Features
-  - Direct token purchase
-  - Token selling mechanism
-  - Real-time price updates
-  - Transaction history
 
 - King Hill Feature
   - Special token interaction mechanism
@@ -35,7 +24,7 @@ This is a decentralized platform that enables users to easily create and manage 
 - React 18
 - TypeScript
 - Vite
-- Web3.js/Ethers.js (for blockchain interactions)
+- CosmJS (for blockchain interactions)
 - ESLint (code standards)
 
 ## Getting Started
@@ -44,7 +33,7 @@ This is a decentralized platform that enables users to easily create and manage 
 
 - Node.js >= 16
 - npm >= 7
-- MetaMask or compatible Web3 wallet
+- Keplr Wallet
 
 ### Installation
 
@@ -58,86 +47,67 @@ npm install
 npm run dev
 ```
 
-### Build for Production
+### Production Build
 
 ```bash
 npm run build
 ```
 
-## Smart Contracts
+## Network Configuration
 
-### SAT Layer Contracts
-The platform integrates with the following SAT Layer smart contracts:
+### Babylon Testnet Information
 
-1. **Token Factory Contract**
-   - Enables creation of new SAT Layer tokens
-   - Handles token deployment and initialization
-   - Manages token listing and visibility
-   - Network: SAT Layer Testnet/Mainnet
+- Network Name: satlayer-babylon-testnet
+- Chain ID: sat-bbn-testnet1
+- RPC Node: https://rpc.sat-bbn-testnet1.satlayer.net
+- REST API: https://lcd1.sat-bbn-testnet1.satlayer.net
+- Explorer: https://devnet.satlayer.xyz/satlayer-babylon-testnet
 
-2. **Trading Contract**
-   - Handles token buying and selling
-   - Manages price calculations
-   - Provides liquidity mechanisms
+### Token Information
 
-3. **King Hill Game Contract**
-   - Manages token competition mechanics
-   - Implements ranking and reward distribution
-   - Supports token staking and competition rules
+- Token Name: BBN
+- Minimal Denomination: ubbn
+- Decimals: 6
+- Gas Price Configuration:
+  - Low: 0.01
+  - Average: 0.025
+  - High: 0.03
 
-### Contract Addresses
-- Token Factory: `[Contract Address]`
-- Trading Contract: `[Contract Address]`
-- King Hill Game: `[Contract Address]`
+## Features
 
-### Network Configuration
-- Network Name: SAT Layer
-- RPC URL: `https://[network-url]`
-- Chain ID: `[chain-id]`
-- Currency Symbol: SAT
-
-### Platform Features
-
-#### Token List
+### Token List
 - View all available tokens
-- Real-time price and market cap information
+- Real-time price information
 - Trading volume statistics
-- Token details and charts
+- Token details
 
-#### Token Creation
-1. Connect wallet
+### Token Creation Process
+1. Connect Keplr wallet
 2. Fill in token details:
    - Token name
    - Symbol
    - Initial supply
    - Other parameters
-3. Deploy token to SAT Layer
+3. Deploy to Babylon Testnet
 
-#### Trading
-1. **Buying Tokens**
-   - Select token from list
-   - Enter purchase amount
-   - Confirm transaction
-   - View transaction status
+### Trading Features
+- Token purchase
+- Token selling
+- Transaction status tracking
 
-2. **Selling Tokens**
-   - Choose token to sell
-   - Enter sale amount
-   - Confirm transaction
-   - Track sale status
+## Development Guide
 
-### Interacting with Contracts
-1. Connect your wallet to SAT Layer network
-2. Ensure sufficient SAT for gas fees
-3. Follow the UI prompts for token creation and trading
+### Network Connection
+1. Ensure Keplr wallet is installed
+2. Connect to Babylon Testnet
+3. Ensure sufficient BBN tokens for gas fees
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### Contributing
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/NewFeature`)
+3. Commit your changes (`git commit -m 'Add NewFeature'`)
+4. Push to the branch (`git push origin feature/NewFeature`)
+5. Submit a Pull Request
 
 ## License
 
@@ -145,4 +115,4 @@ The platform integrates with the following SAT Layer smart contracts:
 
 ## Contact
 
-For any questions or suggestions, please open an Issue or Pull Request.
+For any questions or suggestions, please submit an Issue or Pull Request.
