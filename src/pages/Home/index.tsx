@@ -1,13 +1,11 @@
 import { useAccount, useCosmWasmSigningClient } from "graz"
 import { useEffect } from "react"
+import { Footer } from "../../components/footer"
 import { signingOpts } from "../../constant"
 import { Banner } from "./Banner"
 import ConnectWallet from "./ConnectWallet"
 import { WireKingHillView } from "./KingHillView"
 import { WireListContent } from "./ListContentView"
-import { Footer } from "../../components/footer";
-
-
 
 export const HomePage = () => {
   const { isConnected } = useAccount()
@@ -29,5 +27,5 @@ export const HomePage = () => {
       <WireKingHillView />
       <Footer />
     </div>
-  );
-};
+  )
+}

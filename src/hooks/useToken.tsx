@@ -14,7 +14,7 @@ export const useTokenInfo = (address: string | undefined) => {
     if (!signingClient || !address) return
     signingClient.getContract(address).then(res => {
       const name = getTokenName(res.label)
-      console.log("name", name)
+      console.log("name", res, name)
     })
   }, [signingClient, address])
 }
