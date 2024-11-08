@@ -15,11 +15,9 @@ export const useTokenInfo = (address: string | undefined) => {
   useEffect(() => {
     if (!signingClient || !address) return
     (async () => {
-      const name = getTokenName(address)
-      const [tokenData, contractInfo] = await Promise.all([
-        getToken(name),
-        signingClient.getContract(address)
-      ])
+      const contractInfo = await signingClient.getContract(address)
+      const name = getTokenName(contractInfo.label)
+      const tokenData = await getToken(name)
       setTokenData({ ...tokenData, ...contractInfo })
     })()
   }, [signingClient, address])

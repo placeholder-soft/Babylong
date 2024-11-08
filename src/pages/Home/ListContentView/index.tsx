@@ -38,7 +38,6 @@ const ListItem: React.FC<{item: ListItemProps}> = ({ item }) => {
                 </div>
                 <div className="flex items-center justify-between">
                     <p className="text-[#D90368]">Market cap <span className="font-medium">47.50K</span></p>
-                    <p>Comments: 59</p>
                 </div>
                 <div className="flex items-center justify-between">
                     <p className="text-gray-600"> <span className="font-semibold">{item.name}</span> {item.description}</p>
