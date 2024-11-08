@@ -23,15 +23,14 @@ const KingHillView = () => {
                         <p className='text-[#D90368]'>Market cap <span className='font-bold'>47.50K</span></p>
                     </div>
                     <p>
-                     <span className='font-bold'>America/ACC (ticker: USA/ACC):</span> We are so back</p>
+                        <span className='font-bold'>America/ACC (ticker: USA/ACC):</span> We are so back</p>
                 </div>
                 <img className='absolute -left-[444px] bottom-[71px] h-[123px]' src={leftClasses} alt="" />
                 <img className='absolute -right-[447px] h-[123px] top-[95px]' src={rightClasses} alt="" />
             </div>
         </div>
         <div style={{ backgroundImage: `url(${banner})` }} className="h-[287px] w-full bg-cover bg-center relative" >
-        <CreateToken className='absolute bottom-[106px] right-[90px]' />
-
+            <CreateToken className='absolute bottom-[106px] right-[90px]' />
         </div>
     </>
 }

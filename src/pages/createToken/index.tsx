@@ -133,7 +133,7 @@ export const CreateTokenPage: FC = () => {
 
   return (
     <div className="w-full min-h-[100vh] relative flex flex-col items-center justify-center">
-      <div className="flex-1 flex flex-col items-center justify-center relative pb-[524px]">
+      <div className="flex-1 w-full flex flex-col items-center justify-center relative pb-[524px]">
         <img src={header} alt="header" className="h-[80px] w-full relative z-10" />
         <img src={bg} alt="bg" className="w-full h-full absolute top-0 left-0 z-0" />
         <img src={title} alt="title" className="h-[108px] relative z-10 mt-[120px] mb-[100px]" />
