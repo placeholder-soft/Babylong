@@ -18,7 +18,6 @@
     "@cosmjs/stargate": "^0.32.4",
     "@cosmjs/tendermint-rpc": "^0.32.4",
     "@t3-oss/env-core": "^0.11.1",
-    "@tailwindcss/forms": "^0.5.9",
     "graz": "^0.1.25",
     "long": "^5.2.3",
     "nanoid": "^5.0.8",

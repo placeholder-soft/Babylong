@@ -9,7 +9,7 @@ import {
 } from "graz";
 import { useEffect } from "react";
 
-export const HomePage = () => {
+export const HomePageTest = () => {
   const { connect } = useConnect();
   const { isConnected, data: accountData } = useAccount();
 
