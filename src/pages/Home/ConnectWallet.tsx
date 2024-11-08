@@ -3,19 +3,25 @@ import { saltplaer } from "../../constant"
 import { getEllipsisAddress } from "../../utils/formatAddress"
 import SearchIcon from "./assets/searchIcon.svg?react"
 import WalletIcon from "./assets/wallet-icon.svg?react"
+import { useSearch } from "../../context/SearchContext"
 
 export default function ConnectWallet() {
   const { connect } = useConnect()
   const { isConnected, data: accountData } = useAccount()
   const { disconnect } = useDisconnect()
+  const { searchValue, setSearchValue } = useSearch()
+
+
   return (
     <div className="absolute bottom-[0px] flex w-full items-center justify-center gap-4 border-t border-solid border-[#D6d6d6] bg-[#D90368] px-[7%] py-[32px]">
       <div className="flex flex-1 items-center gap-2">
         <SearchIcon />
         <input
+          value={searchValue}
           className="ml-[32px] w-full bg-transparent text-[32px] uppercase text-white outline-none placeholder:text-white"
           type="text"
           placeholder="Type token symbol, address to find your launchpad..."
+          onChange={(e) => setSearchValue(e.target.value)}
         />
       </div>
       <div className="rounded-[73px] border-4 border-solid border-[#FFCA05] bg-[#C5005D] p-[32px] text-[32px] font-bold leading-[100%] text-[#FFCA05]">

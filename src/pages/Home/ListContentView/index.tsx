@@ -15,6 +15,7 @@ import { formatDate, formatTime } from "../../../utils/date"
 import { getEllipsisAddress } from "../../../utils/formatAddress"
 import { formatUnits } from "../../../utils/number"
 import { TokenPrice } from "../../Detail"
+import { useSearch } from '../../../context/SearchContext';
 
 
 interface ListContentProps {
@@ -57,6 +58,13 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
 }
 
 const ListContent: React.FC<ListContentProps> = ({ items }) => {
+    const { searchValue } = useSearch();
+    
+    const filteredItems = items.filter(item => 
+        item.address.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
     return (
         <div className="mx-auto bg-[#FFCA05] px-4 py-8 pt-[124px]">
             <div className="flex items-center justify-center gap-4 relative mb-[84px]">
@@ -64,7 +72,7 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
                 <img className="w-[125px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src={coin} alt="coin" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1680px] mx-auto">
-                {items.map((item, idx) => (
+                {filteredItems.map((item, idx) => (
                     <ListItem
                         key={idx}
                         item={item}
@@ -72,7 +80,7 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
                 ))}
 
             </div>
-            {items.length === 0 && <p className="text-gray-600 my-24 text-center text-2xl">No tokens found</p>}
+            {filteredItems.length === 0 && <p className="text-gray-600 my-24 text-center text-2xl">No tokens found</p>}
             <div className="flex items-center justify-center gap-4 h-[159px] mt-[120px]">
                 <LeftArrow />
                 <div className="flex items-center justify-center gap-4 relative">
