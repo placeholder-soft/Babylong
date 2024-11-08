@@ -4,8 +4,8 @@ import 'vite-plugin-cloudflare-functions/client';
 
 declare module 'vite-plugin-cloudflare-functions/client' {
   interface PagesResponseBody {
-    '/api/tokens/list': {
-      GET: CloudflareResponseBody<typeof import('functions/api/tokens/list')['onRequestGet']>;
+    '/api/token-list': {
+      GET: CloudflareResponseBody<typeof import('functions/api/token-list')['onRequestGet']>;
     };
     '/api/tokens/:tokenId': {
       GET: CloudflareResponseBody<typeof import('functions/api/tokens/[tokenId]')['onRequestGet']>;

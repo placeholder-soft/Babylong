@@ -2,7 +2,7 @@ import {
     makePagesFunction,
     makeResponse,
   } from "vite-plugin-cloudflare-functions/worker"
-  import { PagesFunctionEnv } from "../../types"
+  import { PagesFunctionEnv } from "../types"
 
 export const onRequestGet = makePagesFunction<unknown, PagesFunctionEnv>(
     async ({ params, env }) => {
