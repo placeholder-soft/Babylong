@@ -3,6 +3,7 @@ import { defineConfig } from "vite"
 import { nodePolyfills } from "vite-plugin-node-polyfills"
 import svgr from "vite-plugin-svgr"
 import CloudflarePagesFunctions from "vite-plugin-cloudflare-functions"
+import type { Plugin } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({

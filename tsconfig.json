@@ -1,7 +1,45 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noUncheckedIndexedAccess": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "importsNotUsedAsValues": "remove",
+    "baseUrl": ".",
+    "types": ["@cloudflare/workers-types"],
+    "paths": {
+      "@clients/graphql": ["./src/clients/graphql"],
+      "@clients/rest": ["./src/clients/rest"],
+      "@env": ["./src/env"]
+    }
+  },
+  "include": [
+    "src",
+    "generator",
+    "./global.d.ts",
+    "./cloudflare.d.ts",
+    "./seeds",
+    "tests"
+  ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }
