@@ -56,7 +56,7 @@ export const ImageUploader: FC<ImageUploaderProps> = ({
 
   return (
     <div>
-      <div className="mt-1 flex justify-center items-center p-4 border-[4px] border-[#E6E6E6] h-[250px] rounded-xl">
+      <div className="mt-1 flex justify-center items-center p-6 border-[4px] border-[#E6E6E6] min-h-[250px] rounded-xl">
         <div className="space-y-1 text-center">
           {imagePreview ? (
             <img src={imagePreview} alt="Preview" className="mx-auto h-32 w-32 object-cover" />

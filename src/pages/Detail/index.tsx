@@ -20,7 +20,7 @@ import LeftTopIcon from "./assets/left-top-icon.svg?react"
 import LikeIcon from "./assets/like-icon.svg?react"
 import { Tab, TabType } from "./assets/Tab"
 
-interface TokenPrice {
+export interface TokenPrice {
   reserve: string
   reserve_denom: string
   spot_price: string
@@ -197,8 +197,8 @@ export default function Detail() {
                   </span>
                 </div>
                 <div>
-                  {formatDate(tokenData?.create_at)}&nbsp;|&nbsp;
-                  {formatTime(tokenData?.create_at)}
+                  {formatDate(tokenData?.createAt)}&nbsp;|&nbsp;
+                  {formatTime(tokenData?.createAt)}
                 </div>
               </div>
               <div className="mt-2 text-[18px] leading-[140%] text-[#D90368]">

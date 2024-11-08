@@ -7,27 +7,28 @@ import page from "./_/page.png"
 import LeftArrow from "./_/chevrons-left.svg?react"
 import RightArrow from "./_/chevrons-right.svg?react"
 
-import { getTokenList, TokenData } from "../../../service"
+import { CombineTokenData, getTokenList, TokenData } from "../../../service"
 import { useCosmWasmSigningClient, useQuerySmart } from "graz"
 import { signingOpts } from "../../../constant"
 import { useNavigate } from "react-router"
+import { formatDate, formatTime } from "../../../utils/date"
+import { getEllipsisAddress } from "../../../utils/formatAddress"
+import { formatUnits } from "../../../utils/number"
+import { TokenPrice } from "../../Detail"
 
 
-type ListItemProps = TokenData & {
-    address: string
-}
 interface ListContentProps {
-    items: ListItemProps[]
+    items: CombineTokenData[]
 }
 
-const ListItem: React.FC<{item: ListItemProps}> = ({ item }) => {
+const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
     const navigate = useNavigate()
-    const { data: tokenPrice } = useQuerySmart({
+    const { data: tokenPrice } = useQuerySmart<TokenPrice, string>({
         address: item.address,
         queryMsg: {
-          curve_info: {},
+            curve_info: {},
         },
-      });
+    });
 
     return (
         <div className="flex rounded-lg bg-white p-4 shadow-md transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
@@ -35,16 +36,17 @@ const ListItem: React.FC<{item: ListItemProps}> = ({ item }) => {
                 <img
                     src={item.image}
                     alt={item.name}
-                    className="h-40 w-full rounded-lg object-cover"
+                    className="h-40 w-40 rounded-lg object-cover"
                 />
             </div>
-            <div className="flex-grow mt-4">
+            <div className="flex-grow flex flex-col gap-4 mt-4">
                 <div className="flex items-center justify-between">
-                    <p>Created by <span className="underline">2B5XZX</span></p>
-                    <p>4h ago</p>
+                    <p>Created by <span className="underline">{getEllipsisAddress(item?.creator)}</span></p>
+                    <p>  {formatDate(item?.createAt)}
+                    </p>
                 </div>
                 <div className="flex items-center justify-between">
-                    <p className="text-[#D90368]">Market cap <span className="font-medium">47.50K</span></p>
+                    <p className="text-[#D90368]">Market cap <span className="font-medium">  {formatUnits(tokenPrice?.supply, 6)}</span></p>
                 </div>
                 <div className="flex items-center justify-between">
                     <p className="text-gray-600"> <span className="font-semibold">{item.name}</span> {item.description}</p>
@@ -68,7 +70,9 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
                         item={item}
                     />
                 ))}
+
             </div>
+            {items.length === 0 && <p className="text-gray-600 my-24 text-center text-2xl">No tokens found</p>}
             <div className="flex items-center justify-center gap-4 h-[159px] mt-[120px]">
                 <LeftArrow />
                 <div className="flex items-center justify-center gap-4 relative">
@@ -82,7 +86,7 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
 }
 
 export const WireListContent = () => {
-    const [tokenList, setTokenList] = useState<ListItemProps[]>([])
+    const [tokenList, setTokenList] = useState<CombineTokenData[]>([])
 
     const { data: signingClient } = useCosmWasmSigningClient({
         opts: signingOpts,
@@ -97,18 +101,19 @@ export const WireListContent = () => {
     }
 
     useEffect(() => {
+        if (!signingClient) return
         Promise.all([getTokenList(), getContractTokens()]).then(([tokenList, contractInfos]) => {
-            const result  = tokenList.map(token => {
+            const result = tokenList.map(token => {
                 const contractInfo = contractInfos.find(info => info?.label.includes(token.name))
                 return {
                     ...token,
                     ...contractInfo
-                } as ListItemProps
+                } as CombineTokenData
             })
             setTokenList(result)
         })
     }, [signingClient])
 
-   
+
     return <ListContent items={tokenList} />
 }

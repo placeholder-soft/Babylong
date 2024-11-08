@@ -211,7 +211,6 @@ export const CreateTokenPage: FC = () => {
               Website Link
             </label>
             <input
-              type="url"
               id="websiteLink"
               name="websiteLink"
               placeholder="(Optional)"
@@ -227,7 +226,6 @@ export const CreateTokenPage: FC = () => {
               Twitter Link
             </label>
             <input
-              type="url"
               id="twitterLink"
               name="twitterLink"
               placeholder="(Optional)"
@@ -243,7 +241,6 @@ export const CreateTokenPage: FC = () => {
               Telegram Link
             </label>
             <input
-              type="url"
               id="telegramLink"
               name="telegramLink"
               placeholder="(Optional)"
