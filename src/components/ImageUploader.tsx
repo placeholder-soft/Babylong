@@ -62,7 +62,7 @@ export const ImageUploader: FC<ImageUploaderProps> = ({
             <img src={imagePreview} alt="Preview" className="mx-auto h-32 w-32 object-cover" />
           ) : null}
           <div className="flex text-2xl text-gray-600 flex flex-col items-center gap-8">
-            <p className="pl-1">drag ‘n drop an image or video</p>
+            <p className="pl-1">Upload an image</p>
             <label
               htmlFor="image-upload"
               className="relative cursor-pointer text-2xl rounded-xl font-bold text-indigo-600 text-white bg-black py-2 px-6 w-fit"

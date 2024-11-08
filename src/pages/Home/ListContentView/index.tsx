@@ -33,7 +33,7 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
     });
 
     return (
-        <div className="flex rounded-lg bg-white gap-4 p-4 shadow-md max-w-[533px] transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
+        <div className="flex rounded-lg bg-white gap-6 p-4 shadow-md max-w-[533px] transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
             <div className="flex-shrink-0">
                 <img
                     src={item.image}
@@ -51,7 +51,7 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
                     <p className="text-[#D90368]">Market cap <span className="font-medium">  {formatUnits(tokenPrice?.supply, 6)}</span></p>
                 </div>
                 <div className="flex items-center justify-between">
-                    <p className="text-gray-600 text-wrap break-all"> <span className="font-semibold">{item.name}</span> {item.description}</p>
+                    <p className="text-gray-600 text-wrap break-all"> <span className="font-semibold text-black text-lg">{item.ticker}</span> {item.description}</p>
                 </div>
             </div>
         </div>
