@@ -2,36 +2,36 @@ export const mockNFTData = [
   {
     name: "Bored Ape #1234",
     image:
-      "https://ipfs.io/ipfs/QmRRPWG96cmgTn2qSzjwr2qvfNEuhunv6FNeMFGa9bx6MQ",
+      "https://st2.depositphotos.com/1520573/11556/v/450/depositphotos_115567992-stock-illustration-july-05-2016-the-character.jpg",
     description:
-      "Bored Ape Yacht Club 是以太坊区块链上的 10,000 个独特的 NFT 系列之一。每只猿都是由超过 170 种可能的特征生成的。",
+      "Bored Ape Yacht Club is a collection of 10,000 unique NFTs on the Ethereum blockchain. Each ape is generated from over 170 possible traits.",
   },
   {
     name: "CryptoPunk #5822",
     image:
-      "https://ipfs.io/ipfs/QmTDc3Y7YEJ3ysGPPp4ce6vWeMhwq7eYqGkrDszBhwzKrB",
+      "https://st2.depositphotos.com/1520573/11556/v/450/depositphotos_115567992-stock-illustration-july-05-2016-the-character.jpg",
     description:
-      "CryptoPunks 是最早的 NFT 项目之一，由 10,000 个独特的像素艺术角色组成。这个朋克具有稀有的外星人特征。",
+      "CryptoPunks is one of the earliest NFT projects, consisting of 10,000 unique pixel art characters. This punk features the rare alien trait.",
   },
   {
     name: "Doodle #8147",
     image:
-      "https://ipfs.io/ipfs/QmNf1UsmdGaMbpatQ6toXSkzDpizaGmC9zfunCyoz1enD5",
+      "https://st2.depositphotos.com/1520573/11556/v/450/depositphotos_115567992-stock-illustration-july-05-2016-the-character.jpg",
     description:
-      "Doodles 是一个由社区驱动的 NFT 项目，包含 10,000 个独特的手绘艺术品。每个 Doodle 都有独特的颜色组合和个性。",
+      "Doodles is a community-driven NFT project featuring 10,000 unique hand-drawn artworks. Each Doodle has its unique color combination and personality.",
   },
   {
     name: "Azuki #9527",
     image:
-      "https://ipfs.io/ipfs/QmYDvPAXtiJg7s8JdRBSLWdgSphQdac8j1YuQNNxcGE1hg",
+      "https://st2.depositphotos.com/1520573/11556/v/450/depositphotos_115567992-stock-illustration-july-05-2016-the-character.jpg",
     description:
-      "Azuki 是一个动漫风格的 NFT 系列，融合了日本文化元素。每个 Azuki 都有独特的特征和装备。",
+      "Azuki is an anime-style NFT collection that incorporates elements of Japanese culture. Each Azuki has unique traits and equipment.",
   },
   {
     name: "CloneX #2048",
     image:
-      "https://ipfs.io/ipfs/QmZXCXMdXj5HGgBV2s2GDtqGkPj4QXxJLVGx7ydyZY1dX8",
+      "https://st2.depositphotos.com/1520573/11556/v/450/depositphotos_115567992-stock-illustration-july-05-2016-the-character.jpg",
     description:
-      "CloneX 是 RTFKT 和 Takashi Murakami 合作的 NFT 项目，融合了未来主义和艺术风格，每个克隆人都具有独特的特征。",
+      "CloneX is an NFT project collaboration between RTFKT and Takashi Murakami, blending futurism and artistic style, with each clone featuring unique characteristics.",
   },
 ]
