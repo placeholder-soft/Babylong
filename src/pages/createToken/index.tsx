@@ -6,6 +6,12 @@ import { env } from "../../env"
 import { ImageUploader } from "../../components/ImageUploader"
 import { randomNanoid } from "../../utils/nanoid"
 import { createToken } from "../../service"
+import header from "./_/header.png"
+import bg from "./_/bg.png"
+import title from "./_/title.png"
+import button from "./_/button.png"
+import { Footer } from "../../components/footer"
+import HotIcon from "./_/hot.svg?react"
 
 interface FormData {
   displayName: string
@@ -21,6 +27,13 @@ const initialFormState: FormData = {
   description: '',
   image: '',
   create_at: 0,
+}
+
+const styles = {
+  label: "block text-2xl font-bold text-black",
+  input: "block w-full focus:border-indigo-500 focus:ring-indigo-500 bg-[#F5F5F5] rounded-xl p-4 border-[4px] border-[#E6E6E6]",
+  formGroup: "flex flex-col gap-2",
+  submitButton: "w-full flex justify-center font-bold py-4 px-6 border-[4px] border-black rounded-xl text-2xl text-black bg-[#FFCA05]"
 }
 
 export const CreateTokenPage: FC = () => {
@@ -61,7 +74,7 @@ export const CreateTokenPage: FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!signingClient) {
       toast.error("Please connect your wallet first")
       return
@@ -101,81 +114,97 @@ export const CreateTokenPage: FC = () => {
         },
       )
     } catch (error) {
-      setIsUploading(false) 
+      setIsUploading(false)
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
       toast.error(errorMessage)
     }
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6 font-SchibstedGrotesk">Create New Token</h2>
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Display Name Input */}
-        <div>
-          <label htmlFor="displayName" className="block text-sm font-medium text-gray-700">
-            Name
-          </label>
-          <input
-            type="text"
-            id="displayName"
-            name="displayName"
-            value={formData.displayName}
-            onChange={handleInputChange}
-            className="mt-1 h-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
-        </div>
+    <div className="w-full min-h-[100vh] relative flex flex-col items-center justify-center">
+      <div className="flex-1 flex flex-col items-center justify-center relative pb-[254px]">
+        <img src={header} alt="header" className="h-[80px] w-full relative z-10" />
+        <img src={bg} alt="bg" className="w-full h-full absolute top-0 left-0 z-0" />
+        <img src={title} alt="title" className="h-[108px] relative z-10 mt-[120px] mb-[100px]" />
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white w-[640px] flex-1 relative z-10 border-[4px] border-black rounded-xl p-10">
+          {/* Name Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="displayName" className={styles.label}>
+              Name
+            </label>
+            <input
+              type="text"
+              id="displayName"
+              name="displayName"
+              placeholder="Name"
+              value={formData.displayName}
+              onChange={handleInputChange}
+              className={styles.input}
+              required
+            />
+          </div>
 
-        {/* Symbol Input */}
-        <div>
-          <label htmlFor="symbol" className="block text-sm font-medium text-gray-700">
-          Ticker
-          </label>
-          <input
-            type="text"
-            id="ticker"
-            name="ticker"
-            value={formData.ticker}
-            onChange={handleInputChange}
-            className="mt-1 h-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
-          />
-        </div>
+          {/* Ticker Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="ticker" className={styles.label}>
+              Ticker
+            </label>
+            <input
+              type="text"
+              id="ticker"
+              name="ticker"
+              placeholder="Ticker"
+              value={formData.ticker}
+              onChange={handleInputChange}
+              className={styles.input}
+              required
+            />
+          </div>
 
-        {/* Description Input */}
-        <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
-        </div>
+          {/* Description Input */}
+          <div className={styles.formGroup}>
+            <label htmlFor="description" className={styles.label}>
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={handleInputChange}
+              rows={4}
+              className={`${styles.input} resize-none`}
+            />
+          </div>
 
-        <ImageUploader
-          onUploadSuccess={handleImageUploadSuccess}
-          onUploadStart={handleImageUploadStart}
-          onUploadError={handleImageUploadError}
-        />
+          {/* Image Uploader */}
+          <div className={styles.formGroup}>
+            <label className={styles.label}>
+              Image or Video
+            </label>
+            <ImageUploader
+              onUploadSuccess={handleImageUploadSuccess}
+              onUploadStart={handleImageUploadStart}
+              onUploadError={handleImageUploadError}
+            />
+          </div>
 
-        {/* Submit Button */}
-        <div>
-          <button
-            type="submit"
-            disabled={isUploading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400"
-          >
-            {isUploading ? 'Creating...' : 'Create Token'}
-          </button>
-        </div>
-      </form>
+          {/* Submit Button */}
+          <div className="mt-8">
+            <button
+              type="submit"
+              disabled={isUploading}
+              className={styles.submitButton}
+            >
+              {isUploading ? 'CREATING...' : <div className="flex items-center justify-center gap-2">
+                <span>CREATE TOKEN</span>
+                <img src={button} alt="button" className="h-[70px]" />
+              </div>}
+            </button>
+          </div>
+        </form>
+      </div>
+      <Footer />
     </div>
   )
 }
