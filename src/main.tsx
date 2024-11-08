@@ -1,15 +1,15 @@
-import { GrazProvider } from "graz";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { GrazProvider } from "graz"
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
 import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
-} from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { createRoutes } from "./routes/routeDefs";
-import "./styles/index.css";
+} from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { createRoutes } from "./routes/routeDefs"
+import "./styles/index.css"
 
 export const saltplaer = {
   chainId: "sat-bbn-testnet1",
@@ -59,7 +59,7 @@ export const saltplaer = {
       },
     },
   ],
-};
+}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -73,5 +73,5 @@ createRoot(document.getElementById("root")!).render(
       />
       <ToastContainer />
     </GrazProvider>
-  </StrictMode>
-);
+  </StrictMode>,
+)
