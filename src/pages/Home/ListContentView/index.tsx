@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import tokens from "./_/tokens.png"
 import coin from "./_/coin.png"
 import page from "./_/page.png"
@@ -33,7 +33,7 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
     });
 
     return (
-        <div className="flex rounded-lg bg-white gap-6 p-4 shadow-md max-w-[533px] transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer" onClick={() => navigate(`/detail/${item.address}`)}>
+        <div className="flex rounded-lg bg-white gap-6 p-4 shadow-md max-w-[533px] transition-shadow duration-300 hover:shadow-lg h-fit cursor-pointer border-[2px] border-black" onClick={() => navigate(`/detail/${item.address}`)}>
             <div className="flex-shrink-0">
                 <img
                     src={item.image}
@@ -96,7 +96,8 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
 
 export const WireListContent = () => {
     const [tokenList, setTokenList] = useState<CombineTokenData[]>([])
-    const [lastItem, setLastItem] = useState<CombineTokenData | undefined>(undefined)
+
+    const lastItem = useMemo(() => tokenList[tokenList.length - 1], [tokenList])
 
     const { data: signingClient } = useCosmWasmSigningClient({
         opts: signingOpts,
@@ -120,8 +121,7 @@ export const WireListContent = () => {
                     ...contractInfo
                 } as CombineTokenData
             })
-            setTokenList(result)
-            setLastItem(result[result.length - 1])
+            setTokenList(result.reverse())
         })
     }, [signingClient])
 
