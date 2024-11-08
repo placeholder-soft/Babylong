@@ -1,3 +1,9 @@
+import ConnectWallet from "./ConnectWallet";
+
 export const HomePage = () => {
-  return <div>home</div>;
+  return (
+    <div>
+      <ConnectWallet />
+    </div>
+  );
 };
