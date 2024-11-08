@@ -12,6 +12,7 @@ import title from "./_/title.png"
 import button from "./_/button.png"
 import { Footer } from "../../components/footer"
 import HotIcon from "./_/hot.svg?react"
+import { useNavigate } from "react-router"
 
 interface FormData {
   displayName: string
@@ -43,6 +44,8 @@ const styles = {
 }
 
 export const CreateTokenPage: FC = () => {
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState<FormData>(initialFormState)
   const [isUploading, setIsUploading] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -120,7 +123,7 @@ export const CreateTokenPage: FC = () => {
             })
             setIsSubmitting(false)
             toast.success("Token created successfully")
-            resetForm()
+            navigate(`/}`)
           },
         },
       )
