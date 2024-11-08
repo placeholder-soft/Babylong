@@ -12,9 +12,9 @@ export default defineConfig({
             dts: "./cloudflare.d.ts",
             wrangler: {
               log: true,
-              kv: ["artworks"],
+              kv: ["satlayer_hackathon_tokens"],
             },
-    } as PluginOption)
+    })
   ],
   resolve: {
     alias: {
