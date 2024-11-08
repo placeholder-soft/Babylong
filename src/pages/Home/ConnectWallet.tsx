@@ -1,23 +1,49 @@
-import { useAccount } from "graz";
-import { getEllipsisAddress } from "../../utils/formatAddress";
-import banner from "./assets/banner.png";
-import WalletIcon from "./assets/wallet.svg?react";
+import { useAccount, useConnect, useDisconnect, WalletType } from "graz"
+import { saltplaer } from "../../constant"
+import { getEllipsisAddress } from "../../utils/formatAddress"
+import SearchIcon from "./assets/searchIcon.svg?react"
+import WalletIcon from "./assets/wallet-icon.svg?react"
 
 export default function ConnectWallet() {
-  const { isConnected, data: accountData } = useAccount();
+  const { connect } = useConnect()
+  const { isConnected, data: accountData } = useAccount()
+  const { disconnect } = useDisconnect()
   return (
-    <div className="relative">
-      <img src={banner} alt="banner" className="w-full h-full" />
-      <div className="p-[32px] rounded-[73px]  border-4 border-solid border-[#FFCA05] absolute right-[10%] bottom-[3%] text-[#FFCA05] text-[42px] font-bold ">
+    <div className="flex items-center justify-center bg-[#D90368] px-[7%] py-[32px]">
+      <div className="flex flex-1 items-center gap-2">
+        <SearchIcon />
+        <input
+          className="ml-[32px] w-full bg-transparent text-[32px] uppercase text-white outline-none placeholder:text-white"
+          type="text"
+          placeholder="Type token symbol, address to find your launchpad..."
+        />
+      </div>
+      <div className="rounded-[73px] border-4 border-solid border-[#FFCA05] bg-[#C5005D] p-[24px] text-[30px] font-bold leading-[30px] text-[#FFCA05]">
         {isConnected ? (
           <div className="flex items-center gap-2">
             <WalletIcon />
             {getEllipsisAddress(accountData?.bech32Address)}
+            <button
+              className="ml-4 text-[24px] uppercase"
+              onClick={() => disconnect()}
+            >
+              Disconnect
+            </button>
           </div>
         ) : (
-          <button className="uppercase ">Connect Wallet</button>
+          <button
+            className="uppercase"
+            onClick={() => {
+              connect({
+                chainId: saltplaer.chainId,
+                walletType: WalletType.LEAP,
+              })
+            }}
+          >
+            Connect Wallet
+          </button>
         )}
       </div>
     </div>
-  );
+  )
 }
