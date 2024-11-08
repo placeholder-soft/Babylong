@@ -75,13 +75,6 @@ export const CreateTokenPage: FC = () => {
     setIsUploading(false)
   }
 
-  const resetForm = () => {
-    setFormData(initialFormState)
-    if (formData.image) {
-      URL.revokeObjectURL(formData.image)
-    }
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
