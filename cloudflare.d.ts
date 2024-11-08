@@ -8,5 +8,8 @@ declare module 'vite-plugin-cloudflare-functions/client' {
       GET: CloudflareResponseBody<typeof import('functions/api/tokens/[tokenId]')['onRequestGet']>;
       POST: CloudflareResponseBody<typeof import('functions/api/tokens/[tokenId]')['onRequestPost']>;
     };
+    '/api/tokens/list': {
+      GET: CloudflareResponseBody<typeof import('functions/api/tokens/list')['onRequestGet']>;
+    };
   }
 }
