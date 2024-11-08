@@ -66,7 +66,7 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
     );
 
     return (
-        <div className="mx-auto bg-[#FFCA05] px-4 py-8 pt-[124px]">
+        <div className="mx-auto bg-[#FFCA05] px-4 py-8 pt-[124px] relative">
             <div className="flex items-center justify-center gap-4 relative mb-[84px]">
                 <img className="h-[108px]" src={tokens} alt="tokens" />
                 <img className="w-[125px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src={coin} alt="coin" />
