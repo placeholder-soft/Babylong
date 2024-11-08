@@ -2,6 +2,7 @@ import { useAccount, useCosmWasmSigningClient } from "graz"
 import { useEffect } from "react"
 import { signingOpts } from "../../constant"
 import { Banner } from "./Banner"
+import ConnectWallet from "./ConnectWallet"
 import { WireKingHillView } from "./KingHillView"
 import { WireListContent } from "./ListContentView"
 import { Footer } from "../../components/footer";
@@ -23,6 +24,7 @@ export const HomePage = () => {
   return (
     <div>
       <Banner />
+      <ConnectWallet />
       <WireListContent />
       <WireKingHillView />
       <Footer />
