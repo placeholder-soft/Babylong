@@ -6,10 +6,12 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { createRoutes } from "./routes/routeDefs";
 import "./styles/index.css";
 
-const saltplaer = {
+export const saltplaer = {
   chainId: "sat-bbn-testnet1",
   chainName: "satlayer-babylon-testnet",
   rpc: "https://rpc.sat-bbn-testnet1.satlayer.net",
@@ -69,6 +71,7 @@ createRoot(document.getElementById("root")!).render(
       <RouterProvider
         router={createBrowserRouter(createRoutesFromElements(createRoutes()))}
       />
+      <ToastContainer />
     </GrazProvider>
   </StrictMode>
 );
