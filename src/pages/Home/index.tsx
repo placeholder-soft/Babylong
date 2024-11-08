@@ -5,6 +5,9 @@ import { Banner } from "./Banner"
 import ConnectWallet from "./ConnectWallet"
 import { WireKingHillView } from "./KingHillView"
 import { WireListContent } from "./ListContentView"
+import { Footer } from "../../components/footer";
+
+
 
 export const HomePage = () => {
   const { isConnected } = useAccount()
@@ -24,6 +27,7 @@ export const HomePage = () => {
       <ConnectWallet />
       <WireListContent />
       <WireKingHillView />
+      <Footer />
     </div>
-  )
-}
+  );
+};
