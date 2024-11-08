@@ -57,6 +57,8 @@ export default function Detail() {
   const [activeTab, setActiveTab] = useState<TabType>(TabType.BUY)
   const [amount, setAmount] = useState("")
 
+  const bbnBalance = balances?.find(item => item.denom === "ubbn")?.amount
+
   const voteList = [
     {
       num: 100,
@@ -72,7 +74,6 @@ export default function Detail() {
 
   const setMax = () => {
     if (isBuy) {
-      const bbnBalance = balances?.find(item => item.denom === "ubbn")?.amount
       setAmount(formatUnits(bbnBalance, 6))
     } else {
       setAmount(formatUnits(tokenBalance?.balance, 6))
@@ -80,18 +81,34 @@ export default function Detail() {
   }
 
   const handleBuy = () => {
+    if (!bbnBalance || bbnBalance === "0") {
+      toast.error("You have no BBN balance")
+      return
+    }
+    const amountNum = parseUnits(amount, 6)
+    if (Number(amountNum) > Number(bbnBalance)) {
+      toast.error("You have no enough BBN balance")
+      return
+    }
+    const id = toast.loading("Transaction in progress")
     executeContract(
       {
         signingClient: signingClient!,
         msg: { buy: {} },
-        funds: [{ denom: "ubbn", amount: parseUnits(amount, 6) }],
+        funds: [{ denom: "ubbn", amount: amountNum }],
       },
       {
         onError: err => {
+          toast.dismiss(id)
           console.error("Buy transaction failed", err)
         },
         onSuccess: () => {
-          toast.success("Buy transaction successful")
+          toast.update(id, {
+            closeButton: true,
+            render: "Buy transaction successful",
+            type: "success",
+            isLoading: false,
+          })
         },
       },
     )
@@ -102,6 +119,12 @@ export default function Detail() {
       toast.error("You have no this token balance")
       return
     }
+    const amountNum = parseUnits(amount, 6)
+    if (Number(amountNum) > Number(tokenBalance?.balance)) {
+      toast.error("You have no enough token balance")
+      return
+    }
+    const id = toast.loading("Transaction in progress")
     executeContract(
       {
         signingClient: signingClient!,
@@ -113,10 +136,16 @@ export default function Detail() {
       },
       {
         onError: err => {
+          toast.dismiss(id)
           console.error("Sell token failed", err)
         },
         onSuccess: () => {
-          toast.success("Sell token successful")
+          toast.update(id, {
+            closeButton: true,
+            render: "Sell token successful",
+            type: "success",
+            isLoading: false,
+          })
         },
       },
     )
