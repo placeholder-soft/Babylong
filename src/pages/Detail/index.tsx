@@ -5,7 +5,7 @@ import {
   useExecuteContract,
   useQuerySmart,
 } from "graz"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useParams } from "react-router"
 import { toast } from "react-toastify"
 import { Footer } from "../../components/footer"
@@ -27,6 +27,11 @@ export interface TokenPrice {
   supply: string
 }
 
+interface VoteData {
+  likes: number;
+  dislikes: number;
+}
+
 export default function Detail() {
   const { data: signingClient } = useCosmWasmSigningClient({
     opts: signingOpts,
@@ -38,7 +43,7 @@ export default function Detail() {
 
   const tokenData = useTokenData(address)
 
-  const { data: tokenBalance } = useQuerySmart<{ balance: string }, string>({
+  const { data: tokenBalance, refetch: refreshTokenBalance } = useQuerySmart<{ balance: string }, string>({
     address,
     queryMsg: {
       balance: {
@@ -47,7 +52,7 @@ export default function Detail() {
     },
   })
 
-  const { data: tokenPrice } = useQuerySmart<TokenPrice, string>({
+  const { data: tokenPrice, refetch: refreshTokenPrice } = useQuerySmart<TokenPrice, string>({
     address,
     queryMsg: {
       curve_info: {},
@@ -56,17 +61,55 @@ export default function Detail() {
 
   const [activeTab, setActiveTab] = useState<TabType>(TabType.BUY)
   const [amount, setAmount] = useState("")
+  const [voteData, setVoteData] = useState<VoteData>({ likes: 0, dislikes: 0 })
+
+  useEffect(() => {
+    const storedVotes = localStorage.getItem(`votes_${address}`)
+    if (storedVotes) {
+      setVoteData(JSON.parse(storedVotes))
+    } else {
+      const randomVotes = {
+        likes: Math.floor(Math.random() * 201), // 0-200
+        dislikes: Math.floor(Math.random() * 21), // 0-20
+      }
+      setVoteData(randomVotes)
+      localStorage.setItem(`votes_${address}`, JSON.stringify(randomVotes))
+    }
+  }, [address])
+
+  const handleVote = (type: 'likes' | 'dislikes') => {
+    const newVoteData = {
+      ...voteData,
+      [type]: voteData[type] + 1
+    }
+    setVoteData(newVoteData)
+    localStorage.setItem(`votes_${address}`, JSON.stringify(newVoteData))
+  }
 
   const bbnBalance = balances?.find(item => item.denom === "ubbn")?.amount
 
   const voteList = [
     {
-      num: 100,
-      icon: <LikeIcon />,
+      num: voteData.likes,
+      icon: (
+        <div 
+          className="cursor-pointer transition-transform hover:scale-110 active:scale-95"
+          onClick={() => handleVote('likes')}
+        >
+          <LikeIcon />
+        </div>
+      ),
     },
     {
-      num: 2,
-      icon: <DislikeIcon />,
+      num: voteData.dislikes,
+      icon: (
+        <div 
+          className="cursor-pointer transition-transform hover:scale-110 active:scale-95"
+          onClick={() => handleVote('dislikes')}
+        >
+          <DislikeIcon />
+        </div>
+      ),
     },
   ]
 
@@ -103,6 +146,8 @@ export default function Detail() {
           console.error("Buy transaction failed", err)
         },
         onSuccess: () => {
+          refreshTokenBalance()
+          refreshTokenPrice()
           toast.update(id, {
             closeButton: true,
             render: "Buy transaction successful",
@@ -140,6 +185,8 @@ export default function Detail() {
           console.error("Sell token failed", err)
         },
         onSuccess: () => {
+          refreshTokenBalance()
+          refreshTokenPrice()
           toast.update(id, {
             closeButton: true,
             render: "Sell token successful",
@@ -236,7 +283,9 @@ export default function Detail() {
               </div>
               <div
                 onClick={handleClick}
-                className={`mt-6 flex cursor-pointer items-center justify-center rounded-[13px] border-[3px] border-solid border-black bg-[#FFCA05] px-[24px] py-[16px] text-[32px] font-[900] uppercase shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]`}
+                className={`mt-6 flex cursor-pointer items-center justify-center rounded-[13px] border-[3px] border-solid border-black bg-[#FFCA05] px-[24px] py-[16px] text-[32px] font-[900] uppercase 
+                  transition-all hover:scale-[1.02] hover:shadow-[0px_6px_6px_0px_rgba(0,0,0,0.25)] 
+                  active:scale-[0.98] active:shadow-[0px_2px_2px_0px_rgba(0,0,0,0.25)]`}
               >
                 {isBuy ? "BUY" : "SELL"} Token
                 <ButtonIcon className="ml-2" />
