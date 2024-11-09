@@ -106,7 +106,7 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
 export const WireListContent = () => {
     const [tokenList, setTokenList] = useState<CombineTokenData[]>([])
 
-    const lastItem = useMemo(() => tokenList[tokenList.length - 1], [tokenList])
+    const lastItem = useMemo(() => tokenList[0], [tokenList])
 
     const { data: signingClient } = useCosmWasmSigningClient({
         opts: signingOpts,
