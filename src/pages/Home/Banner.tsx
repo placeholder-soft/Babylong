@@ -5,7 +5,7 @@ export const Banner = () => {
   return (
     <div className="relative">
       <img src={banner} alt="banner" className="h-full w-full" />
-      <CreateToken className="absolute bottom-[15%] right-[7%]" />
+      <CreateToken className="absolute bottom-[15%] right-[25%]" />
       <ConnectWallet />
     </div>
   )
