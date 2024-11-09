@@ -116,7 +116,7 @@ export const CreateTokenPage: FC = () => {
             })
             setIsSubmitting(false)
             toast.success("Token created successfully")
-            navigate(`/}`)
+            navigate(`/`)
           },
         },
       )
