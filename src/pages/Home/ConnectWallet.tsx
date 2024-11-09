@@ -34,10 +34,10 @@ export default function ConnectWallet() {
   return (
     <div className="absolute bottom-[0px] flex w-full items-center justify-center gap-4 border-t border-solid border-[#D6d6d6] bg-[#D90368] px-[7%] py-[16px]">
       <div className="flex justify-center items-center gap-2">
-        <SearchIcon />
+        <SearchIcon className="h-[24px] w-auto"/>
         <input
           value={searchValue}
-          className="ml-[32px] w-[600px] bg-transparent text-[18px] uppercase text-white outline-none placeholder:text-white"
+          className="ml-4 w-[600px] bg-transparent text-[18px] uppercase text-white outline-none placeholder:text-white"
           type="text"
           placeholder="Type token symbol, address to find your launchpad..."
           onChange={e => setSearchValue(e.target.value)}
@@ -46,10 +46,10 @@ export default function ConnectWallet() {
       <div className="rounded-[73px] border-4 border-solid border-[#FFCA05] bg-[#C5005D] py-[14px] px-[21px] text-[18px] font-bold leading-[100%] text-[#FFCA05]">
         {isConnected ? (
           <div className="flex items-center gap-2">
-            <WalletIcon />
+            <WalletIcon className="h-[18px] w-auto"/>
             {getEllipsisAddress(accountData?.bech32Address)}
             <button
-              className="ml-4 text-[24px] uppercase"
+              className="ml-4 text-[18px] uppercase"
               onClick={() => disconnect()}
             >
               Disconnect
