@@ -6,6 +6,7 @@ import page from "./_/page.png"
 
 import LeftArrow from "./_/chevrons-left.svg?react"
 import RightArrow from "./_/chevrons-right.svg?react"
+import Alert from './_/notification-alert.svg?react'
 
 import { CombineTokenData, getTokenList, TokenData } from "../../../service"
 import { useCosmWasmSigningClient, useQuerySmart } from "graz"
@@ -23,7 +24,7 @@ interface ListContentProps {
     items: CombineTokenData[]
 }
 
-const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
+const ListItem: React.FC<{ item: CombineTokenData, idx: number }> = ({ item, idx }) => {
     const navigate = useNavigate()
     const { data: tokenPrice } = useQuerySmart<TokenPrice, string>({
         address: item.address,
@@ -33,24 +34,27 @@ const ListItem: React.FC<{ item: CombineTokenData }> = ({ item }) => {
     });
 
     return (
-        <div 
-            className="flex rounded-lg bg-white gap-6 p-4 
+        <div
+            className="flex rounded-lg bg-white gap-6 
             shadow-[0_4px_12px_rgba(0,0,0,0.1)] max-w-[533px] 
             transition-all duration-300 
             hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:scale-[1.02] 
             active:scale-[0.98] active:shadow-[0_4px_12px_rgba(0,0,0,0.15)] 
             cursor-pointer border-[2px] border-black 
-            h-fit" 
+            h-fit"
             onClick={() => navigate(`/detail/${item.address}`)}
         >
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 relative">
+                {idx === 0 && <div className='absolute -left-12 top-4'>
+                    <Alert />
+                </div>}
                 <img
                     src={item.image}
                     alt={item.name}
                     className="h-40 w-40 rounded-lg object-cover"
                 />
             </div>
-            <div className="flex-grow flex flex-col gap-4 mt-4">
+            <div className="flex-grow flex flex-col gap-4 mt-4 p-4">
                 <div className="flex items-center justify-between">
                     <p>Created by <span className="underline">{getEllipsisAddress(item?.creator)}</span></p>
                     <p>  {formatDate(item?.createAt)}
@@ -76,15 +80,16 @@ const ListContent: React.FC<ListContentProps> = ({ items }) => {
     );
 
     return (
-        <div className="mx-auto bg-[#FFCA05] px-4 py-8 pt-[124px] relative">
-            <div className="flex items-center justify-center gap-4 relative mb-[84px]">
-                <img className="h-[108px]" src={tokens} alt="tokens" />
-                <img className="w-[125px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src={coin} alt="coin" />
+        <div className="mx-auto bg-[#FFCA05] px-4 py-8 pt-[45px] relative flex flex-col items-center">
+            <div className="flex items-center justify-center gap-4 relative mb-[52px] w-fit">
+                <img className="h-[72px]" src={tokens} alt="tokens" />
+                <img className="w-[75px] absolute left-[64px] -top-[15px]" src={coin} alt="coin" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1680px] mx-auto">
                 {filteredItems.map((item, idx) => (
                     <ListItem
                         key={idx}
+                        idx={idx}
                         item={item}
                     />
                 ))}
@@ -130,7 +135,7 @@ export const WireListContent = () => {
                     ...contractInfo
                 } as CombineTokenData
             })
-            const sortedResult = result.sort((a, b) => 
+            const sortedResult = result.sort((a, b) =>
                 new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
             )
             setTokenList(sortedResult)
