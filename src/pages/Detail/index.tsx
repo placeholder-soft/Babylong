@@ -239,7 +239,7 @@ export default function Detail() {
   return (
     <div className="flex h-screen flex-col bg-[url('/src/pages/Detail/assets/bg.svg')] bg-cover bg-bottom">
       <div className="flex w-full flex-1 items-center justify-center">
-        <div className="relative flex h-3/4 w-3/4 rounded-[24px] border-4 border-solid border-black bg-white">
+        <div className="relative flex min-w-[950px] min-h-[650px] h-3/4 w-3/4 rounded-[24px] border-4 border-solid border-black bg-white">
           <LeftTopIcon className="absolute -left-[130px] -top-[130px]" />
           <div className="flex flex-1 flex-col justify-center border-r border-solid border-black p-[40px]">
             {tokenData?.image && (
