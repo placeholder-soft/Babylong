@@ -33,7 +33,7 @@ This is a decentralized platform specifically designed for the Babylon Testnet t
 
 - Node.js >= 16
 - npm >= 7
-- Keplr Wallet
+- Leap Wallet
 
 ### Installation
 
@@ -82,13 +82,13 @@ npm run build
 - Token details
 
 ### Token Creation Process
-1. Connect Keplr wallet
+1. Connect Leap wallet
 2. Fill in token details:
    - Token name
    - Symbol
    - Initial supply
    - Other parameters
-3. Deploy to Babylon Testnet
+3. Deploy to satlayer-babylon-testnet
 
 ### Trading Features
 - Token purchase
@@ -98,8 +98,8 @@ npm run build
 ## Development Guide
 
 ### Network Connection
-1. Ensure Keplr wallet is installed
-2. Connect to Babylon Testnet
+1. Ensure Leap wallet is installed
+2. Connect to satlayer-babylon-testnet
 3. Ensure sufficient BBN tokens for gas fees
 
 ### Contributing
