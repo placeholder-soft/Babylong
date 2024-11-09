@@ -130,7 +130,10 @@ export const WireListContent = () => {
                     ...contractInfo
                 } as CombineTokenData
             })
-            setTokenList(result.reverse())
+            const sortedResult = result.sort((a, b) => 
+                new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
+            )
+            setTokenList(sortedResult)
         })
     }, [signingClient])
 

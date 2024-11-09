@@ -22,13 +22,12 @@ export const KingHillView: FC<{ item: CombineTokenData }> = ({ item }) => {
             curve_info: {},
         },
     });
-    console.log(item.description);
     
 
     return <>
         <div className="bg-[#FFCA05] border-t border-black py-[122px] flex flex-col items-center gap-[84px] overflow-hidden">
             <img className='h-[108px] ml-[26px]' src={kingHill} alt="king hill" />
-            <div className="h-[442px] w-[1117px] relative bg-white rounded-3xl flex items-center gap-2.5 ">
+            <div className="h-[442px] w-[1117px] relative bg-white rounded-3xl flex items-center gap-8 p-8">
                 <img className='h-[360px] w-[360px]' src={item.image} alt="nft" />
                 <img className='absolute -top-[70px] -left-[100px] h-[200px]' src={hot} alt="hot" />
                 <div className='flex flex-col gap-7'>
